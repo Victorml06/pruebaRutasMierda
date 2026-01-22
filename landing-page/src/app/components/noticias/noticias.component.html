@@ -1,1 +1,57 @@
-<p>noticias works!</p>
+<div class="container mt-4">
+    <h2 class="mb-4">Sección de Noticias</h2>
+
+    <!-- Formulario para agregar noticias -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Crear Nueva Noticia</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-control" [(ngModel)]="titulo" placeholder="Título de la noticia">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">URL de Imagen</label>
+                    <input type="text" class="form-control" [(ngModel)]="imagenUrl" placeholder="https://imgur.com/...">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" rows="3" [(ngModel)]="descripcion"
+                        placeholder="Detalles de la noticia..."></textarea>
+                </div>
+                <div class="col-12 text-end">
+                    <button class="btn btn-primary" (click)="agregarNoticia()"
+                        [disabled]="!titulo || !descripcion || !imagenUrl">
+                        Publicar Noticia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Noticias -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let noticia of noticias">
+            <div class="card h-100 shadow-sm news-card">
+                <img [src]="noticia.imagenUrl" class="card-img-top" alt="{{ noticia.titulo }}"
+                    style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ noticia.titulo }}</h5>
+                    <p class="card-text">{{ noticia.descripcion }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end">
+                    <button class="btn btn-outline-danger btn-sm"
+                        (click)="eliminarNoticia(noticia.id)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="noticias.length === 0">
+            <div class="alert alert-info text-center" role="alert">
+                No hay noticias publicadas. ¡Sé el primero en crear una!
+            </div>
+        </div>
+    </div>
+</div>

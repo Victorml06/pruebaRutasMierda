@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ServicioProductosService } from './services/servicio-productos.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'landing-page';
+  searchTerm: string = '';
+
+  constructor(private servicioProductos: ServicioProductosService) { }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.servicioProductos.setSearchTerm(this.searchTerm);
+  }
 }

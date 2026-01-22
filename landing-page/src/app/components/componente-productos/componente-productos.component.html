@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Gestión de Productos</h2>
+
+  <!-- Form Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">{{ modoEdicion ? 'Editar Producto' : 'Añadir Nuevo Producto' }}</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" [(ngModel)]="nombre" placeholder="Nombre del producto">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Precio</label>
+          <input type="number" class="form-control" [(ngModel)]="precio" placeholder="0.00">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button class="btn w-100" [ngClass]="modoEdicion ? 'btn-warning' : 'btn-success'" (click)="agregarProducto()"
+            [disabled]="!nombre || precio <= 0">
+            {{ modoEdicion ? 'Guardar Cambios' : 'Añadir Producto' }}
+          </button>
+          <button *ngIf="modoEdicion" class="btn btn-secondary ms-2" (click)="cancelarEdicion()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products List -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Lista de Productos</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col" style="width: 200px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of productosFiltrados">
+              <th scope="row">{{ producto.id }}</th>
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.precio | currency:'EUR':'symbol':'1.0-2' }}</td>
+              <td>
+                <button class="btn btn-primary btn-sm me-2" (click)="editarProducto(producto)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarProducto(producto.id)">Eliminar</button>
+              </td>
+            </tr>
+
+            <tr *ngIf="productos.length === 0">
+              <td colspan="4" class="text-center py-4">
+                No hay productos disponibles. ¡Añade uno arriba!
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
